@@ -10,7 +10,7 @@ func RunShell(binary string, args ...string) (*string, error) {
 	out, err := cmd.CombinedOutput()
 	if err != nil {
 		// if there was any error, print it here
-		return nil, fmt.Errorf("could not run command: %v", err)
+		return nil, fmt.Errorf("could not run command: %v, binary message: %s", err, string(out))
 	}
 	output := string(out)
 	return &output, nil
