@@ -6,28 +6,40 @@ rules:
 - apiGroups:
   - batch
   resources:
-  - cronjob
-  - job
+  - cronjobs
+  - jobs
   verbs:
   - get
   - list
-  - delete
 - apiGroups: [""]
   resources:
   - pods
   - pods/log
-  - deployment
-  - service
-  - namespace
-  - cronjob
-  - job
+  - deployments
+  - services
+  - namespaces
   - daemonset
-  - statefulset
+  - statefulsets
   - persistentvolume
   - persistentvolumeclaim
-  - replicaset
-  - node
+  - replicasets
+  - nodes
+  - configmaps
+  - endpoints
+  verbs:
+  - get
+  - list
+- apiGroups: [""]
+  resources:
+  - pods
   verbs:
   - get
   - list
   - delete
+- apiGroups:
+  - "networking.k8s.io"
+  resources:
+  - ingresses
+  verbs:
+  - get
+  - list
