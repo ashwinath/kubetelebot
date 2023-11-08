@@ -1,0 +1,32 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "kubetelebot.fullname" . }}
+rules:
+- apiGroups:
+  - batch
+  resources:
+  - cronjob
+  - job
+  verbs:
+  - get
+  - list
+  - delete
+- apiGroups: [""]
+  resources:
+  - pods
+  - pods/log
+  - deployment
+  - service
+  - namespace
+  - cronjob
+  - job
+  - daemonset
+  - statefulset
+  - persistentvolume
+  - persistentvolumeclaim
+  - replicaset
+  verbs:
+  - get
+  - list
+  - delete

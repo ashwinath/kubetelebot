@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "kubetelebot.fullname" . }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "kubetelebot.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: ClusterRole
+  name: {{ include "kubetelebot.fullname" . }}
+  apiGroup: rbac.authorization.k8s.io
+
