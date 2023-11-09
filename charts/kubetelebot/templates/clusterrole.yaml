@@ -13,19 +13,26 @@ rules:
   - list
 - apiGroups: [""]
   resources:
-  - pods
   - pods/log
-  - deployments
+  - secrets
   - services
   - namespaces
-  - daemonset
-  - statefulsets
-  - persistentvolume
-  - persistentvolumeclaim
-  - replicasets
+  - persistentvolumes
+  - persistentvolumeclaims
   - nodes
   - configmaps
   - endpoints
+  - serviceaccounts
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - apps
+  resources:
+  - statefulsets
+  - daemonsets
+  - deployments
+  - replicasets
   verbs:
   - get
   - list
