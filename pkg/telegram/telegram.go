@@ -44,7 +44,7 @@ func (t *Telegram) Run() {
 		if update.Message.From.UserName == t.allowedUser && update.Message != nil { // If we got a message
 			log.Printf("[%s to bot] %s", update.Message.From.UserName, update.Message.Text)
 
-			args := strings.Split(update.Message.Text, " ")
+			args := strings.Split(strings.ToLower(update.Message.Text), " ")
 			reply, err := shell.RunShell("kubectl", args...)
 			if err != nil {
 				errString := err.Error()
