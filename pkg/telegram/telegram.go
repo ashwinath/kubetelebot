@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"strings"
+	"unicode"
 
 	"github.com/ashwinath/kubetelebot/pkg/shell"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
@@ -44,7 +45,7 @@ func (t *Telegram) Run() {
 		if update.Message.From.UserName == t.allowedUser && update.Message != nil { // If we got a message
 			log.Printf("[%s to bot] %s", update.Message.From.UserName, update.Message.Text)
 
-			args := strings.Split(strings.ToLower(update.Message.Text), " ")
+			args := strings.Split(firstToLower(update.Message.Text), " ")
 			reply, err := shell.RunShell("kubectl", args...)
 			if err != nil {
 				errString := err.Error()
@@ -58,9 +59,22 @@ func (t *Telegram) Run() {
 			_, err = t.bot.Send(msg)
 			if err != nil {
 				log.Printf("[bot to %s] error: %s", update.Message.From.UserName, err)
+				msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Message was too long to respond.")
+				t.bot.Send(msg)
 			}
 		}
 	}
+}
+
+func firstToLower(s string) string {
+	if len(s) == 0 {
+		return s
+	}
+
+	r := []rune(s)
+	r[0] = unicode.ToLower(r[0])
+
+	return string(r)
 }
 
 func wrapInMonospace(text *string) string {
